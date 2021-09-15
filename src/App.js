@@ -1,25 +1,18 @@
-import logo from './logo.svg';
-import './App.css';
+import { Canvas } from '@react-three/fiber'
+import { OrbitControls, OrthographicCamera } from '@react-three/drei'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+import Field from './Field'
 
-export default App;
+
+const App = () => (
+  <Canvas>
+    <OrthographicCamera makeDefault position={[0, 0, 10]} zoom={100}></OrthographicCamera>
+    <ambientLight intensity={0.2} />
+    <spotLight position={[10, 10, 10]} angle={0.25} penumbra={0} />
+    <pointLight position={[-10, -10, -10]} />
+    {/* <OrbitControls /> */}
+    <Field />
+  </Canvas>
+)
+
+export default App
