@@ -1,26 +1,22 @@
 import { useFrame } from '@react-three/fiber'
 import { useStore } from 'effector-react'
 
-import { $laserPositions, $enemies } from '../../store'
+import { $laserPositions, $enemies, removeEnemy } from '../../store'
 
 const GameController = () => {
   const enemies = useStore($enemies)
   const laserPositions = useStore($laserPositions)
 
-  // console.log(`enemies`, enemies)
-  // console.log(`laserPositions`, laserPositions)
-
   useFrame(() => {
-    // console.log('laserPositions', laserPositions)
-    enemies.map(enemy => {
+    enemies.map((enemy) => {
       laserPositions.map(laser => {
         if (
-          enemy[0] + 0.5 > laser[0] &&
-          enemy[0] - 0.5 < laser[0] &&
-          enemy[1] + 0.5 > laser[1] &&
-          enemy[1] - 0.5 < laser[1]
+          enemy.position[0] + 0.2 > laser.position[0] &&
+          enemy.position[0] - 0.2 < laser.position[0] &&
+          enemy.position[1] + 0.2 > laser.position[1] &&
+          enemy.position[1] - 0.2 < laser.position[1]
         ) {
-          console.log('hit')
+          removeEnemy(enemy.id)
         }
       }) 
     })

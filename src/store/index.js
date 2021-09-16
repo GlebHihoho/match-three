@@ -10,8 +10,20 @@ const $enemyPosition1 = createStore([-2, 2, 0]).on(changeEnemyPosition, (_, v) =
 const $enemyPosition2 = createStore([0, 2, 0]).on(changeEnemyPosition, (_, v) => ([v, 2, 0]))
 const $enemyPosition3 = createStore([2, 2, 0]).on(changeEnemyPosition, (_, v) => ([2 + v, 2, 0]))
 
+export const removeEnemy = createEvent()
+export const $removedEnemies = createStore({}).on(removeEnemy, (store, v) => ({ ...store, [v]: v }))
+
 export const $enemyRotation = createStore([0, 0, 0]).on(changeEnemyRotation, (_, v) => ([v, 0, v]))
-export const $enemies = combine([$enemyPosition1, $enemyPosition2, $enemyPosition3])
+export const $enemies = combine(
+  [$enemyPosition1, $enemyPosition2, $enemyPosition3],
+  ([enemyPosition1, enemyPosition2, enemyPosition3]) => (
+    [
+      { id: 1, position: enemyPosition1 },
+      { id: 2, position: enemyPosition2 },
+      { id: 3, position: enemyPosition3 },
+    ]
+  )
+)
 
 export const changePlayerPosition = createEvent()
 export const $playerPosition = createStore([0, 0, 0]).on(changePlayerPosition, (_, v) => ([v, -2, 0]))
